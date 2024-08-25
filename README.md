@@ -1,11 +1,9 @@
-
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+# Work in progress
 
 
 # Learn Netwide Assembler FU
 
-This project aims to aid in your learning journey by providing supplements to the course materials, more elaborate explainations on certain topics as well as insights into examplary code and project ideas for further studies. Note that this project will in no way be able to replace the other learning materials and can not convey all critical information on its own. For stand alone courses check out project like
-[add references]
+This project is designed to support your learning journey by offering supplements to the course materials, providing more detailed explanations on certain topics, and offering insights into exemplary code and project ideas for further study. Please note that this project is not intended to replace the primary learning materials and cannot convey all critical information on its own.
 
 
 ## Documentation
@@ -24,7 +22,7 @@ This project aims to aid in your learning journey by providing supplements to th
 
 - Gauss without wrapper
 
--
+- lecture01 syscalls
 
 
 ## Contributing
