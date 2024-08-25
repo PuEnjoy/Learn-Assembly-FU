@@ -25,7 +25,7 @@ When talking about your computers memory or storage many people tend to refere t
 There is not one Assembly language, rather there is many different dialects. The specifics are defined by your systemarchitecture and manufacturer as well as the operating system. For this course we will be using the Netwide Assembler for Intel x86-64 bit Linux kernel systems. You technically do not yet need to know what this means. If you are already running any Linuxdistribution on an Intel x86-64 bit native CPU, you are all set to follow the lecture. Following along on a 32-bit System should also be no problem as long as the proper conversions are done. Following along on different Operating System kernels or architectures resulting in different dialects and syscalls can be quite challenging and is not recommended. Try using the Universitiys Andora System instead.
 
 # First NASM instructions
-This lecture will be a rather theoretical introduction to all the fundamental instruction you need for your first program. You should try to memorize some basics but there is no need to learn this lecture by heart. You will automatically learn the details during the later more learning by doing style lectures. If you want to try out some examples and run some simple assembly code before compleading the following lectures, you can jump to the [Setting up your playground](#setting-up-your-playground) section and return to this point after. 
+This lecture will be a rather theoretical introduction to all the fundamental instruction you need for your first program. You should try to memorize some basics but there is no need to learn this lecture by heart. You will automatically learn the details during the later more learning by doing style lectures. If you are having a hard time understanding the lecture and want to try out some examples and run some simple assembly code before compleading the following lectures, you can jump to the [Setting up your playground](#setting-up-your-playground) section and return to this point after.
 
 ### Setting up your enviornment
 Create a new file called firstasm.asm `touch firstasm.asm` - other common file extentions are `.a` and `.as` but I will be using `.asm` during this lecture. <br>
@@ -214,5 +214,20 @@ In this lecture you got a short introduction into Assembler language and have le
  Note that as of right now you are still missing some information to actually create your first running program. 
 
  ## Setting up your playground
- In previous lectures of the Computer Architectures class, you never learned how to create standalone programs in Assembly. Instead for each exercise sheet you were provided a wrapper written in C. You would simply create a function in Assembly which would then be linked to the wrapper which created the actual runable program. This was because you had never heard of any operating system functionality before and creating a functional Assembly program requires quite a lot of interaction which your OS. You will learn more about these steps in the next lecture. After compleading this course and learning how to create stand alone programs, we will go back to the old exercise sheets which will hide all kinds of OS-functions from you. The playground will do the same. I will privide you with a C-Wrapper and a Makefile below. You simply don't ask any questions and those tools will do all the heavy lifting for you, until we learn to understand them. 
- 
+ In previous lectures of the Computer Architectures class, you never learned how to create standalone programs in Assembly. Instead for each exercise sheet you were provided a wrapper written in C. You would simply create a function in Assembly which would then be linked to the wrapper which created the actual runable program. This was because you had never heard of any operating system functionality before and creating a functional Assembly program requires quite a lot of interaction which your OS. You will learn more about these steps in the next lecture. After compleading this course and learning how to create stand alone programs, we will go back to the old exercise sheets which will hide all kinds of OS-functions from you. The playground will do the same. I will provide you with a C-Wrapper and a Makefile below. You simply don't ask any questions and those tools will do all the heavy lifting for you, until we learn to understand them. <br>
+ I only recommend setting up and using the playground if you struggle to understand the basic instructions and use of registers. If these concepts are clear, simply continue with the theoretical lectures until you learn to write your first Assembly program. <br>
+ The provides makefile will compile, link and assemble the the C-Wrapper and your code. The C-Wrapper provides the functionality to print out the values of some registers. You can try out some instructions and then view the affected registers. If you are good with theoretical learning and want to save time, simply continue the lectures. We will learn how to write and debug programs later.
+ ### Cloning the playground
+ Go to the following [repository]() and clone it to your prefered location. More details are available on the repo itself.
+ ### Direct download
+ Directly download the [C-Wrapper]() and [Makefile]() to the same location.
+ ### Using the playground
+ Make sure that you do not change the name of the `playground.asm` file. Open the file with any texteditor. It will look something like this:
+ ```asm
+section text
+global _start:
+
+_start:
+    ;your code goes here
+ ``` 
+After writing your code save the file. Navigate to the file location in your terminal. Execute the Makefile by typing `MAKE`. You will see some new files appear including one named `result`. This is an executable file which you can run with `./result`. 
