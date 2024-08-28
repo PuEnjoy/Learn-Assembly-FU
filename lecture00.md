@@ -48,7 +48,7 @@ Open the file with any text editor and you are good to go.
 <caption></caption>
 </table>
 
-I borrowed this table from Siedler's NASM-Cheat-Sheet, which I will likely reference throughout this lecture. I highly recommend it as a resource. I will be working on a reworked English version soon.
+I borrowed this table from Siedler's [NASM-Cheat-Sheet](https://github.com/Siedler/NASM-Assembly-Cheat-Sheet/blob/master/Cheat-Sheet.md), which I will likely reference throughout this lecture. I highly recommend it as a resource. I will be working on a reworked English version soon.
 
 The table shows the most important registers, which are conventionally linked to certain functionalities. Note that while you can break these conventions and use registers freely, you should avoid using the "forbidden" registers listed below.
 <table style="background-color: ##364452;color: ##364452;margin: 1em 0;border: 1px solid #a2a9b1;border-collapse: collapse;">
@@ -170,7 +170,7 @@ These flags are set by preceeding comparison instructions.
 The compare instruction `cmp reg1, reg2/value` subtracts the values without storing the result and sets the processors status bits in the flags  register accordingly. 
 ```asm
 cmp rax, rdi        ;compares value of rax with value of rdi
-cmp rax, 9          ;compares value of rax with value of rdi
+cmp rax, 9          ;compares value of rax with 9
 ```
 #### Test Instruction
 The test instruction `test reg1, reg2/value` performs a logical AND ($\land$) operations and sets the flags mentioned in the previous table.
@@ -179,7 +179,7 @@ test rax, rdi        ;bitwise rax AND rdi
 test rax, 9          ;bitwise rax AND 9
 ```
 #### Conditional jumps
-With the status bit in the flags register set, we can now you conditional jumps to controll our program flow.
+With the status bit in the flags register set, we can now use conditional jumps to controll our program flow.
 
 | Instruction         | Jump name                                | Usecase                                                                |
 | ------------------- | ---------------------------------------- | ---------------------------------------------------------------------- |
@@ -202,7 +202,7 @@ _start:
     cmp rax, rdi            ;compare rax (17) and rdi (21)
     je .equalLable          ;jump if equal -> no jump -> next instruction executes
     add rax, 1              ;add 1 to rax
-    jle .lessEqualLable     ;jump if rax ist less or equal to rdi -> jump
+    jle .lessEqualLable     ;jump if rax is less or equal to rdi -> jump
     add rax, 1              ;NOT executed since we jumped over it
     jmp _end                ;NOT executed
 
@@ -225,7 +225,7 @@ Please note that as of right now, you are still missing some crucial information
 
 
 
- ## Setting up your playground (Under construction)
+ ## [optional] Setting up your playground (Under construction)
  In previous lectures of the Computer Architectures class, you never learned how to create standalone programs in Assembly. Instead for each exercise sheet you were provided a wrapper written in C. You would simply create a function in Assembly which would then be linked to the wrapper which created the actual runable program. This was because you had never heard of any operating system functionality before and creating a functional Assembly program requires quite a lot of interaction which your OS. You will learn more about these steps in the next lecture. After compleading this course and learning how to create stand alone programs, we will go back to the old exercise sheets which will hide all kinds of OS-functions from you. The playground will do the same. I will provide you with a C-Wrapper and a Makefile below. You simply don't ask any questions and those tools will do all the heavy lifting for you, until we learn to understand them. <br>
  I only recommend setting up and using the playground if you struggle to understand the basic instructions and use of registers. If these concepts are clear, simply continue with the theoretical lectures until you learn to write your first Assembly program. <br>
  The provides makefile will compile, link and assemble the the C-Wrapper and your code. The C-Wrapper provides the functionality to print out the values of some registers. You can try out some instructions and then view the affected registers. If you are good with theoretical learning and want to save time, simply continue the lectures. We will learn how to write and debug programs later.
