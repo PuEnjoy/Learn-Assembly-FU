@@ -1,5 +1,5 @@
 # What is Assembler Language?
-You are most likely already familiar with some form of a higher level programming language like Python, Java or even C. They offer a high level of abstraction, offer a lot of functionality with many predefined functions and work on almost any system and regardless of hardware. This is great but in reality our computers do not understand these languages natively. The only language they can speak is maschine language:
+You are most likely already familiar with a higher-level programming language like Python, Java, or even C. These languages offer a high level of abstraction, provide extensive functionality with many predefined functions, and can run on almost any system regardless of hardware. However, computers do not understand these languages natively. The only language they truly understand is machine language, which looks like this:
 ```asm
 00000FFF  00B801000000    
 00001005  BF01000000      
@@ -7,7 +7,7 @@ You are most likely already familiar with some form of a higher level programmin
 00001012  BA0D000000
 00001017  0F05
 ```
-This however is not so readable for us. Introducing Assembler Language, the human readable form of machine code:
+As you can see, machine code is not very readable for humans. This is where Assembly Language comes in—it's the human-readable form of machine code:
 ```asm
 add [rax+0x1],bh
 mov edi,0x1
@@ -15,14 +15,17 @@ lea rsi,[0x402000]
 mov edx,0xd
 syscall
 ```
-Depending on your preference, working on such a low level comes with many caviats or advantages. Besides some very basic support from the Assembler which we will introduce later, there is no one to hold your hands when it comes to memory allocation, variables or advanced controll structures. Your entire code has to function on the few basic instructions supported by your instruction set architecture (ISA). This makes learning the language quite easy but implementing complex problems rather hard.
+Working at such a low level can have its advantages and drawbacks, depending on your preference. Apart from some very basic support from the assembler, which we will introduce later, you are largely on your own when it comes to tasks like memory allocation, variable management, or advanced control structures. Your entire code must be written using the few basic instructions supported by your system's instruction set architecture (ISA). While this makes learning the language relatively straightforward, solving complex problems can be quite challenging.
 
 # Basic Memory
-I will not cover much about memory here since that will be a rather large part later in the lecture. I will however introduce some fundamentals which are required for understanding Assembly.
-When talking about your computers memory or storage many people tend to refere to their long term persitant storage i.e. their SSD or HDD as main memory or main storage. The random access memory will then often be labled as RAM. While the RAM abbreviation is correct, the reference to your SSD is not. When it comes to computer architecture the random access memory (RAM) is what we refere to as main memory. Your slow but large persisten storage is irrelevant for us at the momement. Your computer uses more than just those to types of memory though. Next to some lesser know memory like caches your CPU has his own type of memory called registers. Registers are rather small, holding only a few bytes but are increadibly fast and located as close as possible to where they are needed at, which is inside the procressor itself. Depending on your systemarchitecture, these registers can be loaded with for example 16, 32 or 64 bit values. Instructions like calculations can then be performed on these registers.
+I won’t cover much about memory here since that will be a significant part of the lecture later. However, I will introduce some fundamentals necessary for understanding Assembly.
+
+When people talk about computer memory or storage, they often refer to long-term persistent storage, such as their SSD or HDD, as "main memory" or "main storage." While the term RAM (Random Access Memory) is correct, referring to your SSD as "main memory" is not. In computer architecture, RAM is what we refer to as main memory. Your slow but large persistent storage, like an SSD, is not relevant for us at the moment.
+
+Your computer uses more than just these two types of memory, though. In addition to lesser-known types like caches, your CPU has its own type of memory called registers. Registers are relatively small, holding only a few bytes, but they are incredibly fast and are located as close as possible to where they are needed—inside the processor itself. Depending on your system architecture, these registers can store values of 16, 32, or 64 bits. Operations such as calculations are performed on these registers.
 
 # Differend Dialects 
-There is not one Assembly language, rather there is many different dialects. The specifics are defined by your systemarchitecture and manufacturer as well as the operating system. For this course we will be using the Netwide Assembler for Intel x86-64 bit Linux kernel systems. You technically do not yet need to know what this means. If you are already running any Linuxdistribution on an Intel x86-64 bit native CPU, you are all set to follow the lecture. Following along on a 32-bit System should also be no problem as long as the proper conversions are done. Following along on different Operating System kernels or architectures resulting in different dialects and syscalls can be quite challenging and is not recommended. Try using the Universitiys Andora System instead.
+There isn't just one Assembly language; rather, there are many different dialects. The specifics are defined by your system architecture, manufacturer, and operating system. For this course, we will be using the Netwide Assembler (NASM) for Intel x86-64 bit Linux kernel systems. You don't need to worry too much about what this means just yet. If you are already running any Linux distribution on an Intel x86-64 bit CPU, you are all set to follow the lecture. Following along on a 32-bit system should also be no problem as long as the proper conversions are done. However, using different operating systems, kernels, or architectures, which may result in different dialects and system calls, can be quite challenging and is not recommended. Instead, try using the university’s Andora System.
 
 # First NASM instructions
 This lecture will be a rather theoretical introduction to all the fundamental instruction you need for your first program. You should try to memorize some basics but there is no need to learn this lecture by heart. You will automatically learn the details during the later more learning by doing style lectures. If you are having a hard time understanding the lecture and want to try out some examples and run some simple assembly code before compleading the following lectures, you can jump to the [Setting up your playground](#setting-up-your-playground) section and return to this point after.
@@ -45,26 +48,26 @@ Open the file with any text editor and you are good to go.
 <caption></caption>
 </table>
 
-I borrowed this table from Siedlers [NASM-Cheat-Sheet](https://github.com/Siedler/NASM-Assembly-Cheat-Sheet/blob/master/Cheat-Sheet.md) which I will probably keep referencing to during this lecture and can not recommend enough. I will be working on a reworked english version soon. <br>
-The table shows the most important registers which are by convention linked to certain functionalities. Note that you can break that convention and use them freely as long as you avoid the "forbidden" registers from the table below.<br> 
-The following registers should not be used. Later we might get to know some expections to this rule but for now just avoid them all together.
+I borrowed this table from Siedler's NASM-Cheat-Sheet, which I will likely reference throughout this lecture. I highly recommend it as a resource. I will be working on a reworked English version soon.
+
+The table shows the most important registers, which are conventionally linked to certain functionalities. Note that while you can break these conventions and use registers freely, you should avoid using the "forbidden" registers listed below.
 <table style="background-color: ##364452;color: ##364452;margin: 1em 0;border: 1px solid #a2a9b1;border-collapse: collapse;">
 <tbody>
 <tr><th>Register</th><th>Related</th><th>Reason</th></tr>
-<tr><td>rbp</td><td>ebp, bp, bpl</td><td>Pointer to previous stackframe.</td></tr>
-<tr><td>rsp</td><td>esp, sp, sple</td><td>Marks position to first stackentrie.</td></tr>
-<tr><td>rbx</td><td>ebx, bx, bh, bl</td><td>Needed for programm execution.</td></tr>
-<tr><td>r12</td><td>r12d, r12w, r12b</td><td>Reserved for internal programflow.</td></tr>
-<tr><td>r13</td><td>r13d, r13w, r13b</td><td>Reserved by definition.</td></tr>
-<tr><td>r14</td><td>r14d, r14w, r14b</td><td>Reserved by definition.</td></tr>
-<tr><td>r15</td><td>r15d, r15w, r15b</td><td>Reserved by definition.</td></tr>
+<tr><td>rbp</td><td>ebp, bp, bpl</td><td>Pointer to the previous stack frame.</td></tr>
+<tr><td>rsp</td><td>esp, sp, sple</td><td>Marks the position of the first stack entry.</td></tr>
+<tr><td>rbx</td><td>ebx, bx, bh, bl</td><td>Often needed for program execution.</td></tr>
+<tr><td>r12</td><td>r12d, r12w, r12b</td><td>Reserved for internal program flow.</td></tr>
+<tr><td>r13</td><td>r13d, r13w, r13b</td><td>Reserved by convention.</td></tr>
+<tr><td>r14</td><td>r14d, r14w, r14b</td><td>Reserved by convention.</td></tr>
+<tr><td>r15</td><td>r15d, r15w, r15b</td><td>Reserved by convention.</td></tr>
 <tr><td>rip</td><td>ip</td><td>Program counter.</td></tr>
-<tr><td>rflags</td><td>eflags, flags</td><td>zero flag, carry flag, etc.</td></tr>
+<tr><td>rflags</td><td>eflags, flags</td><td>Holds status flags (zero flag, carry flag, etc.).</td></tr>
 </tbody>
 <caption></caption>
 </table>
 
-This leaves you with the following scratch registers which you can use freely:
+This leaves you with the following scratch registers, which you can use freely:
 <table style="border-collapse: collapse;">
   <tr>
     <td style="border: 1px solid black; padding: 8px;">rax</td>
@@ -80,7 +83,7 @@ This leaves you with the following scratch registers which you can use freely:
 </table>
 
 ### Related registers
-As you may have already seen in the previous tables, each register has related registers. Take the `rax` register for example:
+As you may have already noticed in the previous tables, each register has related sub-registers. For example, the `rax` register has the following related registers:
 
 <table style="border-collapse: collapse;">
   <tr>
@@ -92,69 +95,75 @@ As you may have already seen in the previous tables, each register has related r
   </tr>
 </table>
 
-All of these registers are the `rax` register. The difference is which part they are refering to. `rax` referes to the full 64 bit of the register. `eax` referese to the lower 32 bit of **the same** register. `ax` referse to the 16 bit version and `al` referese to the lower 8 bits. `ah` stand for ax higher. Therefore it referse to the higher 8 bits of the 16 bit `ax` register and **not** to the 8 highest bit of the 64 bit `rax` register.
+All of these registers are part of the `rax` register. The difference is which part they refer to:
+
+- `rax` refers to the full 64-bit register.
+- `eax` refers to the lower 32 bits of the same register.
+- `ax` refers to the lower 16 bits.
+- `al` refers to the lowest 8 bits.
+- `ah` refers to the higher 8 bits of the 16-bit `ax` register, **not** the highest 8 bits of the 64-bit rax register.
 
 ## Basic Instructions
-In the following section I will introduce some very basic nasm instructions. We will introduce more along the way when needed.
+In the following section, I will introduce some very basic NASM instructions. We will cover more as needed throughout the course.
 ```asm
 mov rax, 365         ;set the value of rax to 365
 mov rcx, rax         ;set the value of rcx to the value of rax (365)
 mov al, 8            ;set the lower 8 bit of rax to 8 !since rax was 365 which takes up more than 8bit, the value of rax is NOT 8 but 264
 
-add rax, 5          ;adds 5 to rax (264) and saves the result to rax
-add rcx, rax        ;adds the value of rax to the value of rcx and saves to rcx
+add rax, 5          ;adds 5 to rax (264) and store the result in rax
+add rcx, rax        ;adds the value of rax to the value of rcx and store in rcx
 
-sub rax, 5          ;subtracts 5 from rax and saves the result to rax
-sub rax, rcx        ;subtracts rcx from rax and saves the result to rax
+sub rax, 5          ;subtracts 5 from rax and stores the result in rax
+sub rax, rcx        ;subtracts rcx from rax and stores the result in rax
 ```
-These instructions are rather straight forward and should be learned by heard.
-While these instructions can be used with both a value and a register as second parameter, some can not:
+These instructions are straightforward and should be memorized. While these instructions can be used with either a value or a register as the second parameter, some instructions have more specific rules:
 ```asm
-mul rsi             ;will multiply the value in rax with the value in rsi.
-div rsi             ;divides the value in rdx:rax by rsi
+mul rsi             ;will multiply the value in rax by the value in rsi.
+div rsi             ;divides the value in rdx:rax by rsi (unsigned interger division)
 ```
 **Note to multiplication:** `mul rsi` will multiply the value in rax with rsi and stores the result in rax. Since multiplications tend to overflow the size of the registers, the result will overflow into rdx if needed. <br>
-**Note to division:** `div rsi` will devide rdx:rax and saves the result of the full number division to rax and the remainder to rdx. It is crutial to check that there is no value unrelated to the division stored in rdx and that a potentially important value in rdx is safed before clearing it!
+**Note to division:** `div rsi` will devide rdx:rax (where rdx hold the high part and rax the low part of the number) and saves the result of the unsigned integer division to rax and the remainder to rdx. It is crutial to check that there is no value unrelated to the division stored in rdx and that a potentially important value in rdx is safed before clearing it!
 ## Conditional controll flow
-The previously mentioned instructions are a good start but to be able to implement any given problem, we are missing a way to manipulate the flow / exection of the code in relation to certain conditions i.e. we are missing "if statements". <br>
-Sadly NASM does not offer the type of if statements you might already know. <br>
-For Assebmly, conditional instructions like:
+The instructions we've covered so far are a good start, but to implement more complex logic, we need a way to manipulate the flow and execution of the code based on certain conditions—in other words, we need "if statements."
+
+Unfortunately, NASM does not offer the type of if statements you might already know from higher-level languages. For example, in Assembly, conditional instructions like:
 ```python
-if (i < my_value): print(f"some value smaller 5: {i}")
+if (i < my_value):
+    print(f"some value smaller 5: {i}")
 ```
- or simple loops
+ or simple loops like:
 ```python
 for (i in range(len(my_arr))): 
     print(my_arr[i])
 ```
-are unthinkable in that form. As you will see later, even the print statement alone will take multiple instruction. <br>
+are not possible in the same form. As you will see later, even a simple `print` statement requires multiple instructions. <br>
 So how can we implement these instructions?
 ### Jumps and flags
-A controll structure which is deprecated in many modern, high level programming language is the jump operation. Instead of just "jumping" / calling between functions, jumps allows us to jump to arbitrary memory locations from which we continue executing the programs. Thanks to the Assembler (which we will get to know in later lectures), we can set lables in our code to which we jump. This makes our life much easier since we don't have to deal with memory adresses directly. 
+In many modern high-level programming languages, the `goto` or `jump` operation is considered deprecated or discouraged. However, in Assembly, jumps are essential. They allow us to jump to specific memory locations and continue executing the program from there. Thanks to the assembler (which we will cover in later lectures), we can set labels in our code to mark these locations, making our lives easier since we don't have to deal with raw memory addresses directly. 
 ```asm
 my_lable:
     add rax, 1
     jmp my_lable
 ```
-The above code snipped would effectively create an endless loop of incrementing the rax register.
+The above code snippet creates an endless loop of incrementing the rax register.
 
 [addGraphic]
 
-With only the jump `jmp` instruction we can either skip over some code by jumping to a later instruction or create an endless loop by jumping to a previous part of the code. <br>
-We need a way to jump only when certain conditions are meet. <br> 
-Besides the registers you would use for loading and manipulating data, there are certain status flags we can use. These flags are set depending on previous operations and can help us create conditional branches.
+With only the jmp instruction, we can either skip over some code by jumping to a later instruction or create an endless loop by jumping to a previous part of the code. However, we need a way to jump only when certain conditions are met.
 
+Besides the registers used for loading and manipulating data, there are certain status flags we can use. These flags are set based on the results of previous operations and can help us create conditional branches.
 ### Comparing registers and conditional jumps
 | Flag | Flagname      | Usecase                       |
 | ---- | ------------- | ----------------------------- |
 | `sf` | "signed flag" | set for negative values       |
 | `zf` | "zero flag"   | set if result is 0            |
-| `pf` | "parity flag" | last bit is set (even or odd) |
+|
 
-The table shows some of the most frequently used flags. Lesser used flags include: 
-    CF (carry flag),
-    OF (overflow flag),
-    AF (auxiliary carry flag)
+The table shows some of the most frequently used flags. Lesser used flags include:
+   - CF (carry flag),
+   - OF (overflow flag),
+   - AF (auxiliary carry flag / adjust flag)
+   - PF (parity flag)
 
 These flags are set by preceeding comparison instructions.
 #### Compare Instruction
@@ -230,4 +239,4 @@ global _start:
 _start:
     ;your code goes here
  ``` 
-After writing your code save the file. Navigate to the file location in your terminal. Execute the Makefile by typing `MAKE`. You will see some new files appear including one named `result`. This is an executable file which you can run with `./result`. 
+After writing your code save the file. Navigate to the file location in your terminal. Execute the Makefile by typing `MAKE`. You will see some new files appear including one named `result`. This is an executable file which you can run with `./result`.
