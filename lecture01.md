@@ -1,6 +1,8 @@
 # Lecture01 - Syscalls
 - [Lecture01 - Syscalls](#lecture01---syscalls)
   - [Introduction](#introduction)
+  - [Make](#make)
+    - [Using Make](#using-make)
   - [Hello, World!](#hello-world)
     - [Code Sections](#code-sections)
     - [Syscalls - sys\_exit](#syscalls---sys_exit)
@@ -9,7 +11,30 @@
     - [Example Solution](#example-solution)
     - [More about memory adresses](#more-about-memory-adresses)
 ## Introduction
-In this lecture we will create our first standalone program, use some basic system calls and learn how to assemble and execute said program.
+In this lecture will follow a more hands on approach. We will create our first standalone program, use some basic system calls and learn how to assemble and execute said program.
+## Make
+Until we learn how to assemble and link our code i.e. learn to create the actual executable file, I will provide you with a `make` file which will do all the heavy lifting. Make is required throughout the Computer Architecture lecture and is a usefull tool in general. Check if you already have make installed (it comes build in with many linux distributions):
+```bash
+make --version
+``` 
+If you don't have it preinstallt, run the following command: **For Red Hat-based distros like Fedora**
+```bash
+sudo dnf install make
+```
+or for **Debian-based distros like Ubuntu:**
+```bash
+sudo apt-get install build-essential
+```
+### Using Make
+After installing Make you can run make files by simply running the `make` command in the directory of the make file. You can download the makefile [here](). Make sure that both the make file and your assembly `.asm` file are at the same location. *For this part it is actually important that you use `.asm` as file suffix.*
+
+```
+myFolder/
+    ├── yourcode.asm
+    └── make
+```
+Navigate to that directory in your terminal. Then execute `make`.
+
 ## Hello, World!
 Open up your prefered text editor. No special requirements are needed; Nano, Vim, VS Code, everything works fine. Just use whatever you are most comfortable with.
 
