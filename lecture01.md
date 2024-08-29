@@ -26,19 +26,36 @@ or for **Debian-based distros like Ubuntu:**
 sudo apt-get install build-essential
 ```
 ### Using Make
-After installing Make you can run make files by simply running the `make` command in the directory of the make file. You can download the makefile [here](). Make sure that both the make file and your assembly `.asm` file are at the same location. *For this part it is actually important that you use `.asm` as file suffix.*
+After installing Make you can run make files by simply running the `make` command in the directory of the make file. You can download the makefile [here](https://github.com/PuEnjoy/Learn-Assembly-FU/blob/main/makefile). Make sure that both the make file and your assembly `.asm` file are at the same location. *For this part it is actually important that you use `.asm` as file suffix.*
 
 ```
 myFolder/
-    ├── yourcode.asm
+    ├── helloworld.asm
     └── make
 ```
 Navigate to that directory in your terminal. Then execute `make`.
+If everything worked correctly, you should see no output in your terminal. Otherwise you might see some error message. Adjust your code and try `make` again. After each change you will have to execute the `make` command again to assemble the changed file. 
+
+If everything works your directory should look like this:
+```
+myFolder/
+    ├── helloworld.asm
+    ├── helloworld.o
+    ├── helloworld
+    └── make
+```
+As you can see, there should be two new files in the directory. Next to your `.asm` file there should be an object file `yourfilename.o` and one without any suffix. That is the executable. To run it, go back to your terminal and execute `./` followed by that file name. In this example case:
+```bash
+./helloworld
+```
+**Note that your program will not produce any output if it does not print anything to the console. In that case, no respone from your terminal is a good sign.** During this lecture you will learn how to print to the console and why certain errors occour in your program. So don't worry about it now. 
 
 ## Hello, World!
 Open up your prefered text editor. No special requirements are needed; Nano, Vim, VS Code, everything works fine. Just use whatever you are most comfortable with.
 
-Create a new file (preferably with an Assembly style suffix like `.asm`, `.a` or `.as`) and you are good to go. 
+Create a new file (preferably with an Assembly style suffix like `.asm`, `.a` or `.as`) and you are good to go.
+
+*To use the Make file the ending `.asm` is required!* 
 ### Code Sections
 Assembly Programs contain multiple sections like a datasection, read only data section and uninitialised data section. Your code that will be exectuted is written in the `.text` section. <br>
  - [**Task01**]()**:** create the read only data section `.rodata` and `.text` section for your program
@@ -61,11 +78,13 @@ _start:
     
  ```
 We can populate the space after the `_start` lable with whatever instructions we want.
- - [**Task02**]()**:** Try writing some functionality using the instructions from the previous lecture.
+ - [**Task02**]()**:** Try writing some functionality using the instructions from the previous lecture. (Use the [Make](#make) guide to run it.) 
 
 So now that we have some *hopefully* working code, we want to execute it. Well, that is easier said than done. Before we learn how to run assembly code, you should know that your programm will most definitely crash. Even if your code has no errors and can be assembled, it will execute your instructions and then crash due to a `Segmentation fault`.
 
-This error message really does not tell you much and especially when you are used to interpreted languages like Python, it will not get you any closed to fixing the error. We have to properly exit the program. It sounds very trival but most developers can probably go through life without ever specifically exiting their programs. So how do we exit the program? Simple, we tell the operating system to do it for us. 
+This error message really does not tell you much and especially when you are used to interpreted languages like Python, it will not get you any closer to fixing the error.
+
+The issue is that we have to properly exit the program. It sounds very trival but most developers can probably go through life without ever specifically exiting their programs. So how do we exit the program? Simple, we tell the operating system to do it for us. 
 
 ### Syscalls - sys_exit 
 To tell the OS to do something for us, we need to use System Calls. For those of you that have already attended the Operatingsystems and Compuer Networks lecture (OSCN), this should sound very familiar. *If not, read through the [Operating Systems refresher]() lecture.* We remember that our operating system is split into three protection rings. 
@@ -244,7 +263,7 @@ The system call we are looking for is `sys_exit`. To execute a syscall we need t
 
 After setting up the affected registers, we execute the system call itself `syscall` (in many 32bit systems we need to call a specific interupt instead of directly calling a syscall).
 
-- [**Task03**]()**:** Add a proper exit to your program
+- [**Task03**]()**:** Add a proper exit to your program. (Run it again using [make](#make) and see if the errors disappeared)
 
 All together it should look somewhat like this:
 ```asm
@@ -288,10 +307,10 @@ So far so clear but why do we need the second line?
 
 Therefore we defined a lable called 'msg' where we can find the message we want to print out. We also defined a lable at which we store the result of the subtraction of the adress of the msg lable from the current location. What remains and therefore is stored at that lable is the length of what we want saved at the 'msg' lable. This is a clever trick to have a *dynamic* length of the message. *Note that adding anything inbetween these 2 instructions will change the result.*
 
-- [**Task04**]()**:** Write a program that prints out a message and exits properly
+- [**Task04**]()**:** Write a program that prints out a message and exits properly. (Try running it using [make](#make))
 
 <details>
-<summary>Solution</summary>
+<summary>Solution and memory addresses</summary>
 
 ### Example Solution
 
