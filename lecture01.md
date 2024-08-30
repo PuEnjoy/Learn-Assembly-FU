@@ -307,6 +307,8 @@ So far so clear but why do we need the second line?
 
 Therefore we defined a lable called 'msg' where we can find the message we want to print out. We also defined a lable at which we store the result of the subtraction of the adress of the msg lable from the current location. What remains and therefore is stored at that lable is the length of what we want saved at the 'msg' lable. This is a clever trick to have a *dynamic* length of the message. *Note that adding anything inbetween these 2 instructions will change the result.*
 
+**We can only print out ASCII Strings. There is no direct way of printing something like the value of a register without converting it to ascii and loading it into a buffer first.** To see the state of registers for debugging, we will be using an actual debugger in later lectures.
+
 - [**Task04**]()**:** Write a program that prints out a message and exits properly. (Try running it using [make](#make))
 
 <details>
