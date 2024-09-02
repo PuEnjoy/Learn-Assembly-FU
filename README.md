@@ -16,13 +16,9 @@ This project is designed to support your learning journey by offering supplement
 
 ## Roadmap
 
-- Introduction for students after OSCN
-
 - Recap of OSCN for new Students
 
 - Gauss without wrapper
-
-- lecture01 syscalls
 
 
 ## Contributing
