@@ -157,7 +157,7 @@ Besides the registers used for loading and manipulating data, there are certain 
 | ---- | ------------- | ----------------------------- |
 | `sf` | "signed flag" | set for negative values       |
 | `zf` | "zero flag"   | set if result is 0            |
-|
+
 
 The table shows some of the most frequently used flags. Lesser used flags include:
    - CF (carry flag),
