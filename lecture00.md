@@ -1,4 +1,30 @@
-# What is Assembler Language?
+# Lecture 00 - Introduction
+- [Lecture 00 - Introduction](#lecture-00---introduction)
+- [What is Assembly Language?](#what-is-assembly-language)
+- [Basic Memory](#basic-memory)
+- [Differend Dialects](#differend-dialects)
+- [First NASM instructions](#first-nasm-instructions)
+    - [Setting up your enviornment](#setting-up-your-enviornment)
+  - [Registers](#registers)
+    - [Main registers](#main-registers)
+    - [Related registers](#related-registers)
+  - [Basic Instructions](#basic-instructions)
+  - [Conditional program flow](#conditional-program-flow)
+    - [Jumps and flags](#jumps-and-flags)
+    - [Comparing registers and conditional jumps](#comparing-registers-and-conditional-jumps)
+      - [Compare Instruction](#compare-instruction)
+      - [Test Instruction](#test-instruction)
+      - [Conditional jumps](#conditional-jumps)
+      - [Conditional jumps example](#conditional-jumps-example)
+- [End of Lecture](#end-of-lecture)
+- [\[optional\] Setting up your playground (Under construction)](#optional-setting-up-your-playground-under-construction)
+    - [Cloning the playground](#cloning-the-playground)
+    - [Direct download](#direct-download)
+    - [Using the playground](#using-the-playground)
+  
+In this first lecture you will be introduced to some very basic instructions and general knowladge. This first lecture is rather theoretical and aims to provide all prerequisites for the hands on practical parts of the second lecture. 
+
+# What is Assembly Language?
 You are most likely already familiar with a higher-level programming language like Python, Java, or even C. These languages offer a high level of abstraction, provide extensive functionality with many predefined functions, and can run on almost any system regardless of hardware. However, computers do not understand these languages natively. The only language they truly understand is machine language, which looks like this:
 ```asm
 00000FFF  00B801000000    
@@ -123,7 +149,7 @@ div rsi             ;divides the value in rdx:rax by rsi (unsigned interger divi
 ```
 **Note to multiplication:** `mul rsi` will multiply the value in rax with rsi and stores the result in rax. Since multiplications tend to overflow the size of the registers, the result will overflow into rdx if needed. <br>
 **Note to division:** `div rsi` will devide rdx:rax (where rdx hold the high part and rax the low part of the number) and saves the result of the unsigned integer division to rax and the remainder to rdx. It is crutial to check that there is no value unrelated to the division stored in rdx and that a potentially important value in rdx is safed before clearing it!
-## Conditional controll flow
+## Conditional program flow
 The instructions we've covered so far are a good start, but to implement more complex logic, we need a way to manipulate the flow and execution of the code based on certain conditions—in other words, we need "if statements."
 
 Unfortunately, NASM does not offer the type of if statements you might already know from higher-level languages. For example, in Assembly, conditional instructions like:
@@ -218,14 +244,14 @@ _end:
     ;exit the program       
     
 ```
-## End of the Lecture
+# End of Lecture
 In this lecture, you received a brief introduction to Assembly language and learned about the basic instructions needed to start writing your first program. I don’t expect anyone to have memorized all the instructions and details on the first read—this lecture is meant to introduce you to the fundamentals. For the first few programs you create, you will need to frequently reference documentation until these details become second nature. For this, I recommend Siedler's [NASM-Assembly-Cheat-Sheet](https://github.com/Siedler/NASM-Assembly-Cheat-Sheet/blob/master/Cheat-Sheet.md), which provides an excellent overview of registers, volatile vs. non-volatile registers, arithmetic instructions, coding conventions, and much more. Currently, only a German version of this Cheat-Sheet is available, but I will be working on an English version soon. Once completed, you will find a reference to it here.
 
-Please note that as of right now, you are still missing some crucial information to create your first running program. In particular, you need to learn how to communicate with your operating system. This knowledge is essential for performing privileged tasks, including properly exiting the program. We will cover these topics in the next lecture: [lecture01-Syscalls](linktolecture).
+Please note that as of right now, you are still missing some crucial information to create your first running program. In particular, you need to learn how to communicate with your operating system. This knowledge is essential for performing privileged tasks, including properly exiting the program. We will cover these topics in the next lecture: [lecture01-Syscalls](https://github.com/PuEnjoy/Learn-Assembly-FU/blob/main/lecture01.md).
 
 
 
- ## [optional] Setting up your playground (Under construction)
+ # [optional] Setting up your playground (Under construction)
  In previous lectures of the Computer Architectures class, you never learned how to create standalone programs in Assembly. Instead for each exercise sheet you were provided a wrapper written in C. You would simply create a function in Assembly which would then be linked to the wrapper which created the actual runable program. This was because you had never heard of any operating system functionality before and creating a functional Assembly program requires quite a lot of interaction which your OS. You will learn more about these steps in the next lecture. After compleading this course and learning how to create stand alone programs, we will go back to the old exercise sheets which will hide all kinds of OS-functions from you. The playground will do the same. I will provide you with a C-Wrapper and a Makefile below. You simply don't ask any questions and those tools will do all the heavy lifting for you, until we learn to understand them. <br>
  I only recommend setting up and using the playground if you struggle to understand the basic instructions and use of registers. If these concepts are clear, simply continue with the theoretical lectures until you learn to write your first Assembly program. <br>
  The provides makefile will compile, link and assemble the the C-Wrapper and your code. The C-Wrapper provides the functionality to print out the values of some registers. You can try out some instructions and then view the affected registers. If you are good with theoretical learning and want to save time, simply continue the lectures. We will learn how to write and debug programs later.
