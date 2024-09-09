@@ -114,7 +114,7 @@ The issue is that we have to properly exit the program. It sounds very trival bu
 
 ### Syscalls - sys_exit
 
-To tell the OS to do something for us, we need to use System Calls. For those of you that have already attended the Operatingsystems and Compuer Networks lecture (OSCN), this should sound very familiar. *If not, read through the [Operating Systems refresher]() lecture.* We remember that our operating system is split into three protection rings.
+To tell the OS to do something for us, we need to use System Calls. For those of you that have already attended the Operatingsystems and Compuer Networks lecture (OSCN), this should sound very familiar. *If not, read through the [Operating Systems refresher](https://github.com/PuEnjoy/Learn-Assembly-FU/blob/main/protectionrings.md) lecture.* We remember that our operating system is split into three protection rings.
 
 - Ring 0 - Kernel
 - Ring 1 - Drivers, Servers etc. (Deprecated for most modern system)
