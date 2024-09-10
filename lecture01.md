@@ -67,6 +67,8 @@ As you can see, there should be two new files in the directory. Next to your `.a
 
 **Note that your program will not produce any output if it does not print anything to the console. In that case, no respone from your terminal is a good sign.** During this lecture you will learn how to print to the console and why certain errors occour in your program. So don't worry about it now.
 
+When you are done using the current build, you can use `make clean` to remove all generated `.o` files.
+
 ## Hello, World
 
 Open up your prefered text editor. No special requirements are needed; Nano, Vim, VS Code, everything works fine. Just use whatever you are most comfortable with.
